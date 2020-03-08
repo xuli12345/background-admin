@@ -9,12 +9,18 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 import "./assets/base.css"
+//注册全局面包屑组件
+import navmenus from "./components/navmeus.vue"
+Vue.component("navmenus",navmenus)
 
+//导入Vuex
+import store from "./store/store"
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>'

@@ -25,34 +25,47 @@
         <el-button type="primary" @click="submitForm('ruleForm')"
           >提交</el-button
         >
+        
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
+import { login } from "@/request/index";
+import { setAuther } from "@/request/auther";
 export default {
   data() {
-  
-
     return {
       ruleForm: {
         pass: "",
         username: ""
       },
       rules: {
-        pass: [{ required: true, message: "请输入用密码", trigger: "blur" } ],
+        pass: [{ required: true, message: "请输入用密码", trigger: "blur" }],
         username: [
           { required: true, message: "请输入用户名称", trigger: "blur" },
-          { min: 6, max: 18, message: "长度在 6 到 18 个字符", trigger: "blur" }
+          { min: 5, max: 18, message: "长度在 5 到 18 个字符", trigger: "blur" }
         ]
       }
     };
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
-          alert("submit!");
+          let res = await login({
+            username: this.ruleForm.username,
+            password: this.ruleForm.pass
+          });
+          if (res.data.meta.status === 400) {
+            //参数错误 密码错误
+            this.$message.error(res.data.meta.msg);
+          } else if(res.data.meta.status=200) {
+            this.$message.success(res.data.meta.msg);
+            setAuther(res.data.data.token);
+            this.$router.push({path:'/home'});
+          }
+          
         } else {
           console.log("error submit!!");
           return false;
