@@ -10,47 +10,46 @@
         width="50">
       </el-table-column>
       <el-table-column
-        prop="date"
+        prop="authName"
         label="权限名称"
-        width="180">
+        width="250">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="path"
         label="路径"
-        width="180">
+        width="250">
       </el-table-column>
-      <el-table-column
-        prop="address"
-        label="层级">
+      <el-table-column prop="order" label="层级"  width="150">
+     <template slot-scope="scope">
+
+       <div v-if="scope.row.level=='0'">一级</div>
+        <div v-else-if="scope.row.level=='1'">二级</div>
+         <div v-else>三级</div>
+     </template>
       </el-table-column>
     </el-table>
   </div>
 </template>
 <script>
+import {getRightsList} from "@/request/role.js"
 export default {
   data() {
     return {
-           tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
+           tableData: []
     };
+  },
+ async created(){
+   let res = await getRightsList();
+   console.log(res);
+   if(res.meta.status===200){
+     this.tableData=res.data;
+   }
   }
 };
 </script>
 <style lang="scss" scoped>
-
+/deep/ .el-table th>.cell {
+    font-weight: 700;
+    font-size: 14px
+}
 </style>

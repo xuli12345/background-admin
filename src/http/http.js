@@ -5,6 +5,9 @@
    getAuther
  } from "../request/auther"
 
+ // 允许axios跨域携带cookie 默认是不携带
+// axios.defaults.withCredentials = true;
+
  const request = axios.create({
    baseURL: "http://localhost:8888/api/private/v1/"
 
@@ -34,7 +37,7 @@
  //响应拦截器
  request.interceptors.response.use(response => {
    // Do something before response is sent
-   return response;
+   return response.data;
  }, error => {
    // Do something with response error
    return Promise.reject(error);

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    table th {
+      background-color: purple;
+      border-right: 1px solid black;
+    }
+
+    table tr {
+      background-color: pink;
+      border-bottom: 1px solid black;
+    }
+
+    table td {
+      text-align: center;
+      border-right: 1px solid black;
+    }
+
+  </style>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  var tableList = ["姓名", "手机", "地址",
+    [{
+        name: "小黑",
+        phone: 13666666666,
+        address: "北京"
+      },
+      {
+        name: "小白",
+        phone: 13666666667,
+        address: "上海"
+      },
+      {
+        name: "小红",
+        phone: 13666666668,
+        address: "江西"
+      },
+      {
+        name: "小杰",
+        phone: 13666666669,
+        address: "湖南"
+      },
+    ]
+  ]
+  var tbdObj = document.createElement('tbody');
+  var table = document.createElement('table');
+  var thead = document.createElement('thead');
+  table.appendChild(thead);
+  table.appendChild(tbdObj);
+  document.body.appendChild(table);
+  table.style.border = "1px solid black"
+  table.style.width = '400px';
+  var trObj = document.createElement('tr');
+  var newTableData = []
+  for (let i = 0; i < tableList.length; i++) {
+    if (Array.isArray(tableList[i])) {
+      newTableData = tableList.splice(i, 1)
+      for (let e = 0; e < tableList.length; e++) {
+        var thObj = document.createElement('th');
+        thObj.innerHTML = tableList[e];
+        trObj.appendChild(thObj);
+        thead.appendChild(trObj);
+      }
+    }
+  }
+
+  for (let j = 0; j < newTableData.length; j++) {
+    for (const key in newTableData[j]) {
+      var trObj = document.createElement('tr');
+      tbdObj.appendChild(trObj);
+      for (const value in newTableData[j][key]) {
+        var tdObj = document.createElement('td');
+        trObj.appendChild(tdObj);
+        tdObj.innerHTML = newTableData[j][key][value]
+      }
+
+    }
+  }
+  var trList = tbdObj.getElementsByTagName('tr');
+  for (let y = 0; y < trList.length; y++) {
+    if (y % 2 == 0) {
+      trList[y].style.backgroundColor = 'red';
+
+    } else {
+      trList[y].style.backgroundColor = "green";
+    }
+    trList[y].onmouseover = function () {
+      this.oldColor = this.style.backgroundColor;
+      this.style.backgroundColor = 'yellow'
+    }
+    trList[y].onmouseout = function () {
+      this.style.backgroundColor = this.oldColor
+    }
+  }
+  var tdList = tbdObj.getElementsByTagName('td');
+  for (let k = 0; k < tdList.length; k++) {
+    tdList[k].onmouseover = function () {
+      this.color = this.style.backgroundColor;
+      this.style.backgroundColor = 'blue';
+
+    }
+    tdList[k].onmouseout = function () {
+      this.style.backgroundColor = this.color
+    }
+
+    tdList[k].addEventListener("dblclick", function () {
+      var result = window.prompt(this.innerText + "请输入内容要修改的内容")
+      if (result) {
+        this.innerText = result
+      }
+
+    })
+
+
+  }
+
+</script>

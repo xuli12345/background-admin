@@ -10,9 +10,14 @@ Vue.use(ElementUI);
 
 import "./assets/base.css"
 //注册全局面包屑组件
-import navmenus from "./components/navmeus.vue"
+import navmenus from "./components/navmenus.vue"
 Vue.component("navmenus",navmenus)
 
+//引入时间过滤器
+import moment from "moment";
+Vue.filter("timeFilter",function(time,patten='YYYY-MM-DD HH:mm:ss'){
+  return moment(time).format(patten)
+})
 //导入Vuex
 import store from "./store/store"
 Vue.config.productionTip = false

@@ -22,7 +22,7 @@
           <!-- 这里的index不能去掉,匹配路由的 -->
           <el-submenu
             :index="index + ''"
-            v-for="(item, index) in menus"
+            v-for="(item, index) in $store.state.menusList"
             :key="index"
           >
             <template slot="title">
@@ -52,7 +52,7 @@ import { menusList } from "../../request/index";
 export default {
   data() {
     return {
-      menus: ""
+      // menus: ""
     };
   },
   methods: {
@@ -76,8 +76,8 @@ export default {
   },
   async created() {
     let res = await menusList();
-    this.$store.commit("saveMenus", res.data.data);
-    this.menus = this.$store.state.menusList;
+    this.$store.commit("saveMenus", res.data);
+    // this.menus = this.$store.state.menusList;
   }
 };
 </script>

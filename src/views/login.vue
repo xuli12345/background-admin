@@ -25,7 +25,6 @@
         <el-button type="primary" @click="submitForm('ruleForm')"
           >提交</el-button
         >
-        
       </el-form-item>
     </el-form>
   </div>
@@ -57,15 +56,15 @@ export default {
             username: this.ruleForm.username,
             password: this.ruleForm.pass
           });
-          if (res.data.meta.status === 400) {
+
+          if (res.meta.status === 400) {
             //参数错误 密码错误
-            this.$message.error(res.data.meta.msg);
-          } else if(res.data.meta.status=200) {
-            this.$message.success(res.data.meta.msg);
-            setAuther(res.data.data.token);
-            this.$router.push({path:'/home'});
+            this.$message.error(res.meta.msg);
+          } else if ((res.meta.status = 200)) {
+            this.$message.success(res.meta.msg);
+            setAuther(res.data.token);
+            this.$router.push({ path: "/home" });
           }
-          
         } else {
           console.log("error submit!!");
           return false;
